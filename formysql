@@ -1,0 +1,30 @@
+version: "3.8"
+services:
+  backend:
+    build: ./backend
+    networks:
+      - app-network
+    ports: "3000:3000"
+    environment:
+      MYSQL_HOST: mysql
+      MYSQL_USER: user
+      MYSQL_PASSWORD: PASSWORD
+      MYSQL_DATABASE: mydb
+
+  frontend:
+    image: nginx:alpine
+    networks:
+      - app-network
+    ports: "80:80"
+
+  mysql:
+    image: mysql:alpine
+    networks:
+      - app-network
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+      MYSQL_DATABASE: mydb
+    ports: "3306:3306"
+networks:
+  app-network
+    driver: bridge
